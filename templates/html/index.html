@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='plugins/images/favicon.png') }}">
+        <title>Itara</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ url_for('static', filename='html/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Menu CSS -->
+        <link href="{{ url_for('static', filename='plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+        <!-- toast CSS -->
+        <link href="{{ url_for('static', filename='plugins/bower_components/toast-master/css/jquery.toast.css') }}" rel="stylesheet">
+        <!-- morris CSS -->
+        <link href="{{ url_for('static', filename='plugins/bower_components/morrisjs/morris.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='html/css/jquery.dm-uploader.min.css') }}" rel="stylesheet">
+        <!-- chartist CSS -->
+        <link href="{{ url_for('static', filename='plugins/bower_components/chartist-js/dist/chartist.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='plugins/bower_components/chartist-js/dist/custom-style-pie-chart.css') }}" rel="stylesheet">
+        <!-- animation CSS -->
+        <link href="{{ url_for('static', filename='html/css/animate.css') }}" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="{{ url_for('static', filename='html/css/style.css') }}" rel="stylesheet">
+        <!-- color CSS -->
+        <link href="{{ url_for('static', filename='html/css/colors/default.css') }}" rel="stylesheet">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body class="fix-header">
+        <!-- ============================================================== -->
+        <!-- Preloader -->
+        <div class="preloader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+            </svg>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Wrapper -->
+        <!-- ============================================================== -->
+        <div id="wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <div class="top-left-part">
+                    <!-- Logo -->
+                    <a class="logo" href="index.html">
+                        <!-- Logo icon image, you can use font-icon also -->
+                        <b>
+                            <!--This is dark logo icon--><img src="{{ url_for('static', filename='plugins/images/admin-logo.png') }}" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="{{ url_for('static', filename='plugins/images/admin-logo-dark.png') }}" alt="home" class="light-logo" />
+                        </b>
+                        <!-- Logo text image you can use text also -->
+                        <span class="hidden-xs">
+                            <!--This is dark logo text--><img src="{{ url_for('static', filename='plugins/images/admin-text.png') }}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{{ url_for('static', filename='plugins/images/admin-text-dark.png') }}" alt="home" class="light-logo" />
+                        </span>
+                    </a>
+                </div>
+                <!-- /Logo -->
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- End Top Navigation -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav slimscrollsidebar">
+                <div class="sidebar-head">
+                    <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">Navigation</span></h3>
+                </div>
+                <ul class="nav" id="side-menu">
+                    <li style="padding: 70px 0 0;">
+                        <a href='/home' class="waves-effect"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="/compare" class="waves-effect"><i class="fa fa-tasks fa-fw" aria-hidden="true"></i>Compare Data</a>
+                    </li>
+                    <li>
+                        <a href="/viewMore" class="waves-effect"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i>Analysis</a>
+                    </li>
+                </ul>
+                <div class="center p-20">
+                    <a href="/" target="_blank" class="btn btn-danger btn-block waves-effect waves-light">Home Page</a>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page Content -->
+        <!-- ============================================================== -->
+        <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h4 class="page-title">{{forw}}</h4>
+                </div>
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
+                        <form action="" method="get" style="display: flex;">
+                            <select class="form-control pull-right row b-none" name="classifier" style="width: 114px; postion:static; ">
+                                <option>Classifiers</option>
+                                <option value="Naive Bayes">Naive Bayes</option>
+                                <option value="Support Vector Machine">Support Vector Machine</option>
+                                <option value="Maximum Enthropy">Maximum Enthropy</option>
+                            </select>
+                            <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                                <button type="submit" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Select</button>
+                            </div>
+                        </form>
+                    </div>
+                    <form role="upload" style="display: block; width: 410px;" id="drop-area" action="upload" method="POST" enctype="multipart/form-data" onsubmit="return false">
+                        <input type="file" class="form-control"> <a href=""></a>
+                    </form>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <!-- ============================================================== -->
+            <!-- Different data widgets -->
+            <!-- ============================================================== -->
+            <!-- .row -->
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Positive</h3>
+                        <ul class="list-inline two-part">
+                            <li>
+                                <div id="sparklinedash3"></div>
+                            </li>
+                            <li class="text-right"><i class="ti-arrow-up text-success"></i> <span class="counter text-info">{{postive}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Negative</h3>
+                        <ul class="list-inline two-part">
+                            <li>
+                                <div id="sparklinedash4"></div>
+                            </li>
+                            <li class="text-right"><i class="ti-arrow-up text-purple"></i> <span class="counter text-danger">{{negative}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="white-box analytics-info">
+                        <h3 class="box-title">Words Analyzed</h3>
+                        <ul class="list-inline two-part">
+                            <li>
+                                <div id="sparklinedash"></div>
+                            </li>
+                            <li class="text-right"><i class="ti-arrow-up text-info"></i> <span class="counter text-success">{{getIt}}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--/.row -->
+            <!--row -->
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    <div class="white-box">
+                        <h3 class="box-title">Line Graph of Result</h3>
+                        <ul class="list-inline text-left">
+                            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-8">
+                                <a href="/viewMore" class="btn btn-block btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">View More</a>
+                            </div>
+                        </ul>
+                        <ul class="list-inline text-right">
+                            <li>
+                                <h5><i class="fa fa-circle m-r-5 text-info"></i>Positive</h5>
+                            </li>
+                            <li>
+                                <h5><i class="fa fa-circle m-r-5 text-inverse"></i>Negative</h5>
+                            </li>
+                        </ul>
+                        <div id="ct-visits" style="height: 405px;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                    <div class="white-box">
+                        <h3 class="box-title">Trending Words</h3>
+                        <ul class="list-inline text-left">
+                            <li>
+                                <h5> From <i class="fa fa-circle m-r-5 text-warning"></i>{{front}}</h5>
+                            </li>
+                            <li>
+                                <h5> To <i class="fa fa-circle m-r-5 text-warning"></i>{{back}}</h5>
+                                </h3>
+                            </li>
+                        </ul>
+                        <ul class="list-inline text-left">
+                            <li>
+                                <h5><i class="fa fa-circle m-r-5 text-warning"></i>{{cutt1}}</h5>
+                            </li>
+                            <li>
+                                <h5><i class="fa fa-circle m-r-5 text-success"></i>{{cutt2}}</h5>
+                            </li>
+                            <li>
+                                <h5><i class="fa fa-circle m-r-5 text-danger"></i>{{cutt3}}</h5>
+                            </li>
+                        </ul>
+                        <div id="ct-chart-pie" style="height: 405px;"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                    <div class="white-box">
+                        <h3 class="box-title">Average Sentiment: Annual </h3>
+                        <ul class="list-inline text-right">
+                            <li>
+                                <h5><i class="fa fa-circle m-r-5 text-success"></i>Positive</h5>
+                            </li>
+                            <li>
+                                <h5><i class="fa fa-circle m-r-5 text-danger"></i>Negative</h5>
+                            </li>
+                        </ul>
+                        <div id="ct-chart-pie2" style="height: 405px;"></div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- table -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12 negative">
+                        <div class="white-box">
+                            <h3 class="box-title">Trending Words</h3>
+                            <div class="table-responsive" style="height: 400px;overflow-y: auto;">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>TWEET</th>
+                                            <th>DATE</th>
+                                            <th>SENTIMENT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for c in most_tweets %}
+                                        <tr>
+                                            <td class="txt-oflo">{{ c[1] }}</td>
+                                            <td><span class="txt-oflo">{{ c[0] }}</span></td>
+                                            <td class="txt-oflo">{{c[2]}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="row">
+                        <div class="col-md-8 col-lg-8 col-sm-8">
+                            <div class="white-box">
+                                <div class="col-md-3 col-sm-4 col-xs-6 pull-right">
+                                    <form style="display: flex;">
+                                        <select class="form-control pull-right row b-none" name="categories" style="width: 111px; postion:static; ">
+                                            <option>Choose</option>
+                                            <option value="Trump">Trump</option>
+                                            <option value="America">America</option>
+                                            <option value="Obama">Obama</option>
+                                        </select>
+                                        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                                            <button type="submit" class="btn btn-danger pull-right m-l-20 hidden-xs hidden-sm waves-effect waves-light">Select</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <h3 class="box-title">Deep Search</h3>
+                                <div class="table-responsive" style="height: 400px;overflow-y: auto;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>TWEET</th>
+                                                <th>SENTIMENT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for words in holdOn %}
+                                            <tr>
+                                                <td class="txt-oflo">{{words[0]}}</td>
+                                                <td><span class="txt-oflo">{{ words[1] }}</span></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
+                            <div class="white-box">
+                                <h3 class="box-title">More Trending Words</h3>
+                                <div class="comment-center p-t-8">
+                                    <div class="comment-body">
+                                        <div class="mail-contnet">
+                                            <h5>{{cutt1}}</h5>
+                                            <span class="time">
+                                                {{span1[0][0]}}
+                                                <p> </p>
+                                                {{span1[1][0]}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="comment-body">
+                                        <div class="mail-contnet">
+                                            <h5>{{cutt2}}</h5>
+                                            <span class="time">
+                                                {{span2[0][0]}}
+                                                <p> </p>
+                                                {{span2[1][0]}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="comment-body">
+                                        <div class="mail-contnet">
+                                            <h5>{{cutt3}}</h5>
+                                            <span class="time">
+                                                {{span3[0][0]}}
+                                                <p> </p>
+                                                {{span3[1][0]}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="comment-body ">
+                                        <div class="mail-contnet">
+                                            <h5>{{cutt4}}</h5>
+                                            <span class="time">
+                                                {{span4[0][0]}}
+                                                <p> </p>
+                                                {{span4[1][0]}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="comment-body b-none">
+                                        <div class="mail-contnet">
+                                            <h5>{{cutt5}}</h5>
+                                            <span class="time">
+                                                {{span5[0][0]}}
+                                                <p> </p>
+                                                {{span5[1][0]}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+                <footer class="footer text-center"> Itara Analysis by Cheche Uduma  </footer>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Page Content -->
+            <!-- ============================================================== -->
+        </div>
+        <script src="{{ url_for('static', filename='plugins/bower_components/jquery/dist/jquery.min.js') }}"> </script>
+        <script src="{{ url_for('static', filename='js/jquery.dm-uploader.min.js') }}"> </script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{{ url_for('static', filename='html/bootstrap/dist/js/bootstrap.min.js') }}"> </script>
+        <!-- Menu Plugin JavaScript -->
+        <script src="{{ url_for('static', filename='plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"> </script>
+        <!--slimscroll JavaScript -->
+        <script src="{{ url_for('static', filename='html/js/jquery.slimscroll.js') }}"> </script>
+        <!--Wave Effects -->
+        <script src="{{ url_for('static', filename='html/js/waves.js') }}"> </script>
+        <!--Counter js -->
+        <script src="{{ url_for('static', filename='plugins/bower_components/waypoints/lib/jquery.waypoints.js') }}"> </script>
+        <script src="{{ url_for('static', filename='plugins/bower_components/counterup/jquery.counterup.min.js') }}"> </script>
+        <!-- chartist chart -->
+        <script src="{{ url_for('static', filename='plugins/bower_components/chartist-js/dist/chartist.min.js') }}"> </script>
+        <script src="{{ url_for('static', filename='plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js') }}"> </script>
+        <script src="{{ url_for('static', filename='plugins/bower_components/chartist-js/dist/simple-pie-chart.js') }}" ></script>
+        <!-- Sparkline chart JavaScript -->
+        <script src="{{ url_for('static', filename='plugins/bower_components/jquery-sparkline/jquery.sparkline.min.js') }}"> </script>
+        <!-- Custom Theme JavaScript -->
+        <script src="{{ url_for('static', filename='html/js/custom.min.js') }}"> </script>
+        <script src="{{ url_for('static', filename='html/js/dashboard1.js') }}"> </script>
+        <script src="{{ url_for('static', filename='plugins/bower_components/toast-master/js/jquery.toast.js') }}"> </script>
+        <script>
+            //ct-visits
+            new Chartist.Line('#ct-visits', {
+                labels: ['Jan','Feb','Mar','April','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                series:[
+            {{ negatives }},
+                   {{ positives }},
+
+            ]
+            }, {
+                top: 0,
+                low: 1,
+                showPoint: true,
+                fullWidth: true,
+                plugins: [
+            Chartist.plugins.tooltip()
+            ],
+            axisY: {
+                labelInterpolationFnc: function(value) {
+                    return (value / 1);
+                }
+            },
+            showArea: true
+            });
+        </script>
+        <script>
+            var data = {
+               series: [{{call}}, {{call2}}, {{call3}}]
+             };
+
+             var sum = function(a, b , c) { return a + b + c };
+
+             new Chartist.Pie(
+                 '#ct-chart-pie', data, {
+                  labelInterpolationFnc: function(value) {
+                     return ((value * 100 ).toFixed(2)) + '%';
+                 }
+             }
+             );
+        </script>
+        <script>
+            var data = {
+               series: [{{avPos}}, {{avNeg}}]
+             };
+
+            var sum = function(a, b ) { return a + b };
+
+            new Chartist.Pie('#ct-chart-pie2', data, {
+            labelInterpolationFnc: function(value) {
+            return ((value * 100 ).toFixed(2)) + '%';
+            }
+            });
+        </script>
+        <script>
+            $("#drop-area").dmUploader({
+              url: '/upload',
+              //... More settings here...
+
+              onInit: function(){
+                console.log('Callback: Plugin initialized');
+              },
+
+                onComplete: function() {
+                  window.location.reload();
+                }
+
+              // ... More callbacks
+            });
+        </script>
+    </body>
+</html>
